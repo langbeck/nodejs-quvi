@@ -15,8 +15,8 @@
 		"http"
 	],
 
-  "license": {
-    "type": "git",
-    "url": "https://github.com/dorianlangbeck/nodejs-quvi.git"
-  }
+	"license": {
+		"type": "git",
+		"url": "https://github.com/dorianlangbeck/nodejs-quvi.git"
+	}
 }
