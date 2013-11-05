@@ -1,6 +1,6 @@
 {
   "name": "quvi",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Dórian C. Langbeck <dorianlangbeck@gmail.com>",
   "description": "Binding for libquvi (libquvi is a cross-platform library for parsing media stream URLs with C API)",
   "licence": "GPLv3",
