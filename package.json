@@ -12,7 +12,7 @@
     "quvi",
     "http"
   ],
-  "license": {
+  "repository": {
     "type": "git",
     "url": "https://github.com/dorianlangbeck/nodejs-quvi.git"
   }
