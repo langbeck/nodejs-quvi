@@ -51,15 +51,22 @@ WorkInfo::~WorkInfo() {
 		Local<Value> argv[] = { Exception::TypeError(String::New(this->strerr)) };
 	    this->callback->Call(Context::GetCurrent()->Global(), 1, argv);
 	} else {
-		char *m_title, *m_url, *m_thumb;
+		char *m_title, *m_url, *m_thumb, *m_id, *m_ptitle, *m_ctype, *m_fsufix;
+		long m_clength, m_httpcode, m_responsecode;
 		double m_duration;
 
+		quvi_getprop(this->media, QUVIPROP_MEDIACONTENTLENGTH, &m_clength);
+		quvi_getprop(this->media, QUVIPROP_RESPONSECODE, &m_responsecode);
 		quvi_getprop(this->media, QUVIPROP_MEDIATHUMBNAILURL, &m_thumb);
 		quvi_getprop(this->media, QUVIPROP_MEDIADURATION, &m_duration);
+		quvi_getprop(this->media, QUVIPROP_HTTPCODE, &m_httpcode);
 		quvi_getprop(this->media, QUVIPROP_PAGETITLE, &m_title);
 		quvi_getprop(this->media, QUVIPROP_MEDIAURL, &m_url);
 
 		Local<Object> data = Object::New();
+		data->Set(String::New("response_code"), Number::New(m_responsecode));
+		data->Set(String::New("content_length"), Number::New(m_clength));
+		data->Set(String::New("http_code"), Number::New(m_httpcode));
 		data->Set(String::New("duration"), Number::New(m_duration));
 		data->Set(String::New("title"), String::New(m_title));
 		data->Set(String::New("thumb"), String::New(m_thumb));
@@ -110,7 +117,11 @@ void WorkInfo::Run() {
 		quvi_parse_close(&m);
 		quvi_close(&q);
 
-		this->strerr = quvi_strerror(q, rc);
+		//this->strerr = quvi_strerror(q, rc);
+		
+		char buf[512];
+		sprintf(buf, "ERROR %d\r\n", rc);
+		this->strerr = (char*) string(buf).c_str();
 		return;
 	}
 }
